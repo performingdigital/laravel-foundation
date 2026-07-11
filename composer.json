@@ -2,7 +2,7 @@
     "name": "performing/laravel-foundation",
     "description": "Shared Laravel conventions and runtime defaults for Performing applications.",
     "type": "library",
-    "license": "proprietary",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Performing\\LaravelFoundation\\": "src/"
