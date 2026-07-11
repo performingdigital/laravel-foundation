@@ -1,0 +1,119 @@
+{
+    "$schema": "https://shadcn-vue.com/schema/registry.json",
+    "name": "performing",
+    "homepage": "https://github.com/performingdigital/laravel-foundation",
+    "items": [
+        {
+            "name": "button",
+            "type": "registry:ui",
+            "title": "Performing Button",
+            "description": "Shadcn button with Inertia link and confirmation support.",
+            "dependencies": [
+                "@inertiajs/vue3",
+                "class-variance-authority",
+                "reka-ui"
+            ],
+            "files": [
+                {
+                    "path": "registry/js/components/ui/button/Button.vue",
+                    "type": "registry:ui",
+                    "target": "resources/js/components/ui/button/Button.vue"
+                },
+                {
+                    "path": "registry/js/components/ui/button/index.ts",
+                    "type": "registry:ui",
+                    "target": "resources/js/components/ui/button/index.ts"
+                }
+            ]
+        },
+        {
+            "name": "floating-bar",
+            "type": "registry:ui",
+            "title": "Floating Bar",
+            "description": "Responsive Inertia navigation that collapses while scrolling.",
+            "dependencies": ["@inertiajs/vue3", "class-variance-authority"],
+            "files": [
+                {
+                    "path": "registry/js/components/ui/floating-bar/FloatingBar.vue",
+                    "type": "registry:ui",
+                    "target": "resources/js/components/ui/floating-bar/FloatingBar.vue"
+                },
+                {
+                    "path": "registry/js/components/ui/floating-bar/FloatingBarItem.vue",
+                    "type": "registry:ui",
+                    "target": "resources/js/components/ui/floating-bar/FloatingBarItem.vue"
+                },
+                {
+                    "path": "registry/js/components/ui/floating-bar/index.ts",
+                    "type": "registry:ui",
+                    "target": "resources/js/components/ui/floating-bar/index.ts"
+                }
+            ]
+        },
+        {
+            "name": "finder",
+            "type": "registry:ui",
+            "title": "Finder",
+            "description": "Selectable file-browser items and toolbar primitives.",
+            "dependencies": ["@inertiajs/vue3"],
+            "registryDependencies": ["button", "checkbox"],
+            "files": [
+                {
+                    "path": "registry/js/components/ui/finder/FinderItem.vue",
+                    "type": "registry:ui",
+                    "target": "resources/js/components/ui/finder/FinderItem.vue"
+                },
+                {
+                    "path": "registry/js/components/ui/finder/FinderToolbar.vue",
+                    "type": "registry:ui",
+                    "target": "resources/js/components/ui/finder/FinderToolbar.vue"
+                },
+                {
+                    "path": "registry/js/components/ui/finder/FinderToolbarButton.vue",
+                    "type": "registry:ui",
+                    "target": "resources/js/components/ui/finder/FinderToolbarButton.vue"
+                },
+                {
+                    "path": "registry/js/components/ui/finder/FinderToolbarItem.vue",
+                    "type": "registry:ui",
+                    "target": "resources/js/components/ui/finder/FinderToolbarItem.vue"
+                },
+                {
+                    "path": "registry/js/components/ui/finder/index.ts",
+                    "type": "registry:ui",
+                    "target": "resources/js/components/ui/finder/index.ts"
+                }
+            ]
+        },
+        {
+            "name": "select-list",
+            "type": "registry:ui",
+            "title": "Select List",
+            "description": "Asynchronous searchable single or multiple selection powered by TanStack Query.",
+            "dependencies": [
+                "@lucide/vue",
+                "@tanstack/vue-query",
+                "@vueuse/core"
+            ],
+            "registryDependencies": [
+                "badge",
+                "button",
+                "command",
+                "popover",
+                "spinner"
+            ],
+            "files": [
+                {
+                    "path": "registry/js/components/ui/select-list/SelectList.vue",
+                    "type": "registry:ui",
+                    "target": "resources/js/components/ui/select-list/SelectList.vue"
+                },
+                {
+                    "path": "registry/js/components/ui/select-list/index.ts",
+                    "type": "registry:ui",
+                    "target": "resources/js/components/ui/select-list/index.ts"
+                }
+            ]
+        }
+    ]
+}

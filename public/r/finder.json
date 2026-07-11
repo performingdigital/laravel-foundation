@@ -1,0 +1,46 @@
+{
+  "$schema": "https://shadcn-vue.com/schema/registry-item.json",
+  "name": "finder",
+  "title": "Finder",
+  "description": "Selectable file-browser items and toolbar primitives.",
+  "dependencies": [
+    "@inertiajs/vue3"
+  ],
+  "registryDependencies": [
+    "button",
+    "checkbox"
+  ],
+  "files": [
+    {
+      "path": "registry/js/components/ui/finder/FinderItem.vue",
+      "content": "<script setup lang=\"ts\">\nimport { Button } from '@/components/ui/button';\nimport { Checkbox } from '@/components/ui/checkbox';\nimport { cn } from '@/lib/utils';\nimport { Link } from '@inertiajs/vue3';\nimport type { HTMLAttributes } from 'vue';\nimport { computed, useSlots } from 'vue';\n\ndefineOptions({ inheritAttrs: false });\n\nconst props = defineProps<{\n    name: string;\n    meta?: string | null;\n    href?: string | null;\n    selected?: boolean;\n    selectable?: boolean;\n    disabled?: boolean;\n    class?: HTMLAttributes['class'];\n    contentClass?: HTMLAttributes['class'];\n}>();\n\nconst emit = defineEmits<{\n    click: [event: MouseEvent];\n    'update:selected': [selected: boolean];\n}>();\n\nconst slots = useSlots();\nconst hasActions = computed(() => !!slots.actions);\nconst contentClasses = computed(() =>\n    cn(\n        'h-auto w-full justify-start p-3 text-left',\n        props.selectable ? 'pl-12' : '',\n        hasActions.value ? 'pr-12' : '',\n        props.disabled ? 'cursor-default hover:bg-background' : '',\n        props.contentClass,\n    ),\n);\n</script>\n\n<template>\n    <div\n        :class=\"\n            cn(\n                'group relative',\n                selected\n                    ? 'rounded-md ring-2 ring-primary ring-offset-2 ring-offset-background'\n                    : '',\n                props.class,\n            )\n        \"\n    >\n        <div\n            v-if=\"selectable\"\n            class=\"absolute top-2 left-2 z-10 rounded-md bg-background/90 p-1 shadow-sm\"\n            @click.stop\n            @mousedown.stop\n        >\n            <Checkbox\n                :model-value=\"selected\"\n                :aria-label=\"`Select ${name}`\"\n                @update:model-value=\"emit('update:selected', $event === true)\"\n            />\n        </div>\n\n        <Button\n            v-if=\"href\"\n            as-child\n            variant=\"outline\"\n            :class=\"contentClasses\"\n            :disabled=\"disabled\"\n        >\n            <Link\n                :href=\"href\"\n                class=\"flex min-w-0 items-center gap-3\"\n                v-bind=\"$attrs\"\n            >\n                <slot name=\"icon\" />\n\n                <div class=\"min-w-0 flex-1 overflow-hidden\">\n                    <div class=\"truncate text-sm font-medium\">{{ name }}</div>\n                    <div\n                        v-if=\"meta\"\n                        class=\"truncate text-xs font-normal text-muted-foreground\"\n                    >\n                        {{ meta }}\n                    </div>\n                </div>\n            </Link>\n        </Button>\n\n        <Button\n            v-else\n            type=\"button\"\n            variant=\"outline\"\n            :class=\"contentClasses\"\n            :disabled=\"disabled\"\n            v-bind=\"$attrs\"\n            @click=\"emit('click', $event)\"\n        >\n            <div class=\"flex min-w-0 items-center gap-3\">\n                <slot name=\"icon\" />\n\n                <div class=\"min-w-0 flex-1 overflow-hidden\">\n                    <div class=\"truncate text-sm font-medium\">{{ name }}</div>\n                    <div\n                        v-if=\"meta\"\n                        class=\"truncate text-xs font-normal text-muted-foreground\"\n                    >\n                        {{ meta }}\n                    </div>\n                </div>\n            </div>\n        </Button>\n\n        <div\n            v-if=\"hasActions\"\n            class=\"absolute top-1/2 right-2 -translate-y-1/2\"\n        >\n            <slot name=\"actions\" />\n        </div>\n    </div>\n</template>\n",
+      "type": "registry:ui",
+      "target": "resources/js/components/ui/finder/FinderItem.vue"
+    },
+    {
+      "path": "registry/js/components/ui/finder/FinderToolbar.vue",
+      "content": "<script setup lang=\"ts\">\ndefineProps<{\n    selectedCount?: number;\n}>();\n</script>\n\n<template>\n    <div\n        class=\"flex flex-col gap-3 rounded-lg border bg-card p-3 sm:flex-row sm:items-center sm:justify-between\"\n    >\n        <div v-if=\"selectedCount !== undefined\" class=\"text-sm font-medium\">\n            {{ selectedCount }} selected\n        </div>\n\n        <ul class=\"flex flex-wrap gap-2\">\n            <slot />\n        </ul>\n    </div>\n</template>\n",
+      "type": "registry:ui",
+      "target": "resources/js/components/ui/finder/FinderToolbar.vue"
+    },
+    {
+      "path": "registry/js/components/ui/finder/FinderToolbarButton.vue",
+      "content": "<script setup lang=\"ts\">\nimport { Button } from '@/components/ui/button';\nimport type { ButtonVariants } from '@/components/ui/button';\nimport type { HTMLAttributes } from 'vue';\n\nconst props = defineProps<{\n    variant?: ButtonVariants['variant'];\n    size?: ButtonVariants['size'];\n    class?: HTMLAttributes['class'];\n    disabled?: boolean;\n}>();\n</script>\n\n<template>\n    <Button\n        type=\"button\"\n        :variant=\"variant\"\n        :size=\"size ?? 'sm'\"\n        :class=\"props.class\"\n        :disabled=\"disabled\"\n    >\n        <slot />\n    </Button>\n</template>\n",
+      "type": "registry:ui",
+      "target": "resources/js/components/ui/finder/FinderToolbarButton.vue"
+    },
+    {
+      "path": "registry/js/components/ui/finder/FinderToolbarItem.vue",
+      "content": "<template>\n    <li class=\"flex items-center\">\n        <slot />\n    </li>\n</template>\n",
+      "type": "registry:ui",
+      "target": "resources/js/components/ui/finder/FinderToolbarItem.vue"
+    },
+    {
+      "path": "registry/js/components/ui/finder/index.ts",
+      "content": "export { default as FinderItem } from './FinderItem.vue';\nexport { default as FinderToolbar } from './FinderToolbar.vue';\nexport { default as FinderToolbarButton } from './FinderToolbarButton.vue';\nexport { default as FinderToolbarItem } from './FinderToolbarItem.vue';\n",
+      "type": "registry:ui",
+      "target": "resources/js/components/ui/finder/index.ts"
+    }
+  ],
+  "type": "registry:ui"
+}

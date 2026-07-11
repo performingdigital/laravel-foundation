@@ -1,0 +1,38 @@
+{
+    "name": "performing/laravel-foundation",
+    "description": "Shared Laravel conventions and runtime defaults for Performing applications.",
+    "type": "library",
+    "license": "proprietary",
+    "autoload": {
+        "psr-4": {
+            "Performing\\LaravelFoundation\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.3",
+        "illuminate/console": "^11.0|^12.0|^13.0",
+        "illuminate/database": "^11.0|^12.0|^13.0",
+        "illuminate/filesystem": "^11.0|^12.0|^13.0",
+        "illuminate/routing": "^11.0|^12.0|^13.0",
+        "illuminate/support": "^11.0|^12.0|^13.0",
+        "illuminate/validation": "^11.0|^12.0|^13.0",
+        "inertiajs/inertia-laravel": "^3.0",
+        "laravel/scout": "^10.25|^11.0",
+        "meilisearch/meilisearch-php": "^1.16",
+        "nesbot/carbon": "^2.72|^3.0",
+        "spatie/laravel-data": "^4.23",
+        "spatie/laravel-route-attributes": "^1.28"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Performing\\LaravelFoundation\\FoundationServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true
+    }
+}

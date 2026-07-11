@@ -1,0 +1,26 @@
+{
+  "$schema": "https://shadcn-vue.com/schema/registry-item.json",
+  "name": "button",
+  "title": "Performing Button",
+  "description": "Shadcn button with Inertia link and confirmation support.",
+  "dependencies": [
+    "@inertiajs/vue3",
+    "class-variance-authority",
+    "reka-ui"
+  ],
+  "files": [
+    {
+      "path": "registry/js/components/ui/button/Button.vue",
+      "content": "<script setup lang=\"ts\">\nimport { Link } from '@inertiajs/vue3';\nimport type { InertiaLinkProps } from '@inertiajs/vue3';\nimport { Primitive } from 'reka-ui';\nimport type { PrimitiveProps } from 'reka-ui';\nimport type { HTMLAttributes } from 'vue';\nimport { useAttrs } from 'vue';\nimport type { ButtonVariants } from '.';\nimport { cn } from '@/lib/utils';\nimport { buttonVariants } from '.';\n\ndefineOptions({\n    inheritAttrs: false,\n});\n\ninterface Props extends PrimitiveProps {\n    variant?: ButtonVariants['variant'];\n    size?: ButtonVariants['size'];\n    class?: HTMLAttributes['class'];\n    href?: InertiaLinkProps['href'];\n    confirm?: string;\n    disabled?: boolean;\n    onBefore?: InertiaLinkProps['onBefore'];\n}\n\nconst attrs = useAttrs();\nconst props = withDefaults(defineProps<Props>(), {\n    as: 'button',\n    href: undefined,\n    confirm: undefined,\n    disabled: false,\n    onBefore: undefined,\n});\n\nfunction confirmAction(): boolean {\n    return !props.confirm || window.confirm(props.confirm);\n}\n\nfunction handleClick(event: MouseEvent): void {\n    if (props.disabled || !confirmAction()) {\n        event.preventDefault();\n        event.stopImmediatePropagation();\n    }\n}\n\nfunction handleBeforeVisit(\n    ...parameters: Parameters<NonNullable<InertiaLinkProps['onBefore']>>\n): boolean | void {\n    if (props.disabled || !confirmAction()) {\n        return false;\n    }\n\n    return props.onBefore?.(...parameters);\n}\n</script>\n\n<template>\n    <Link\n        v-if=\"href\"\n        :href=\"href\"\n        :class=\"cn(buttonVariants({ variant, size }), props.class)\"\n        :aria-disabled=\"disabled || undefined\"\n        :tabindex=\"disabled ? -1 : undefined\"\n        v-bind=\"attrs\"\n        :on-before=\"handleBeforeVisit\"\n        data-slot=\"button\"\n    >\n        <slot />\n    </Link>\n\n    <Primitive\n        v-else\n        data-slot=\"button\"\n        :data-variant=\"variant\"\n        :data-size=\"size\"\n        :as=\"as\"\n        :as-child=\"asChild\"\n        v-bind=\"attrs\"\n        :disabled=\"disabled\"\n        :class=\"cn(buttonVariants({ variant, size }), props.class)\"\n        @click.capture=\"handleClick\"\n    >\n        <slot />\n    </Primitive>\n</template>\n",
+      "type": "registry:ui",
+      "target": "resources/js/components/ui/button/Button.vue"
+    },
+    {
+      "path": "registry/js/components/ui/button/index.ts",
+      "content": "import type { VariantProps } from 'class-variance-authority';\nimport { cva } from 'class-variance-authority';\n\nexport { default as Button } from './Button.vue';\n\nexport const buttonVariants = cva(\n    \"inline-flex shrink-0 items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\",\n    {\n        variants: {\n            variant: {\n                default:\n                    'border bg-primary text-primary-foreground shadow-xs hover:bg-primary/90',\n                destructive:\n                    'border bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:bg-destructive/60 dark:focus-visible:ring-destructive/40',\n                outline:\n                    'border bg-background shadow-xs hover:bg-primary/10 dark:border-input dark:bg-input/30 dark:hover:bg-input/50',\n                secondary:\n                    'border bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80',\n                ghost: 'hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50',\n                link: 'text-primary underline-offset-4 hover:underline',\n            },\n            size: {\n                default: 'h-9 px-4 py-2 has-[>svg]:px-3',\n                sm: 'h-8 gap-1.5 rounded-md px-3 has-[>svg]:px-2.5',\n                lg: 'h-10 rounded-md px-6 has-[>svg]:px-4',\n                icon: 'size-9',\n                'icon-sm': 'size-8',\n                'icon-lg': 'size-10',\n            },\n        },\n        defaultVariants: {\n            variant: 'default',\n            size: 'default',\n        },\n    },\n);\nexport type ButtonVariants = VariantProps<typeof buttonVariants>;\n",
+      "type": "registry:ui",
+      "target": "resources/js/components/ui/button/index.ts"
+    }
+  ],
+  "type": "registry:ui"
+}
