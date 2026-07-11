@@ -26,7 +26,7 @@ final class UsersCreateCommand extends Command
         $rules = [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255'],
-            'password' => ['required', 'string', 'min:'.config('foundation.defaults.passwords.min', 12)],
+            'password' => ['required', 'string', 'min:' . config('foundation.defaults.passwords.min', 12)],
         ];
         $name = $this->stringOption('name') ?? text(
             label: 'Name',

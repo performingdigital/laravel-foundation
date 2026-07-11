@@ -26,7 +26,7 @@ enum SearchStrategy: string
     public static function options(): array
     {
         return array_map(
-            static fn (self $strategy): array => [
+            static fn(self $strategy): array => [
                 'value' => $strategy->value(),
                 'label' => $strategy->label(),
             ],

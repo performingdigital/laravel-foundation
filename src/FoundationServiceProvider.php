@@ -18,14 +18,14 @@ final class FoundationServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/foundation.php', 'foundation');
+        $this->mergeConfigFrom(__DIR__ . '/../config/foundation.php', 'foundation');
     }
 
     public function boot(): void
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../config/foundation.php' => config_path('foundation.php'),
+                __DIR__ . '/../config/foundation.php' => config_path('foundation.php'),
             ], 'performing-foundation-config');
 
             $this->commands([
@@ -42,6 +42,6 @@ final class FoundationServiceProvider extends ServiceProvider
             AppDefaults::configure();
         }
 
-        Inertia::share('foundation', static fn (): array => config('foundation.frontend', []));
+        Inertia::share('foundation', static fn(): array => config('foundation.frontend', []));
     }
 }

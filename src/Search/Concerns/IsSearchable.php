@@ -36,7 +36,7 @@ trait IsSearchable
             ->getHits();
         $identifiers = array_values(array_filter(
             array_column($hits, $keyName),
-            static fn (mixed $identifier): bool => is_int($identifier) || is_string($identifier),
+            static fn(mixed $identifier): bool => is_int($identifier) || is_string($identifier),
         ));
 
         $query->whereIn($this->qualifyColumn($keyName), $identifiers);

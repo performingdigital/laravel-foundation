@@ -27,10 +27,9 @@ final class AppDefaults
         }
 
         if (config('foundation.defaults.passwords.enabled', true)) {
-            Password::defaults(static fn (): ?Password => app()->isProduction()
+            Password::defaults(static fn(): ?Password => app()->isProduction()
                 ? self::productionPasswordRule()
-                : null,
-            );
+                : null);
         }
     }
 

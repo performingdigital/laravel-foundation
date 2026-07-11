@@ -34,7 +34,7 @@ final class UsersPasswordResetCommand extends Command
 
         $validator = Validator::make(compact('email', 'password'), [
             'email' => ['required', 'email'],
-            'password' => ['required', 'string', 'min:'.config('foundation.defaults.passwords.min', 12)],
+            'password' => ['required', 'string', 'min:' . config('foundation.defaults.passwords.min', 12)],
         ]);
 
         if ($validator->fails()) {

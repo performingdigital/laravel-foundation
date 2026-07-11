@@ -30,12 +30,13 @@ final class UsersListCommand extends Command
 
         $model = $users->newModel();
         $columns = $this->columns();
-        $records = $model->newQuery()
+        $records = $model
+            ->newQuery()
             ->orderByDesc($model->getKeyName())
             ->limit($limit)
             ->get($columns)
-            ->map(static fn (Model $user): array => array_values(array_map(
-                static fn (mixed $value): string => self::displayValue($value),
+            ->map(static fn(Model $user): array => array_values(array_map(
+                static fn(mixed $value): string => self::displayValue($value),
                 $user->only($columns),
             )))
             ->all();
@@ -52,9 +53,11 @@ final class UsersListCommand extends Command
     {
         $columns = config('foundation.users.list_columns', ['id', 'name', 'email', 'created_at']);
 
-        return is_array($columns)
-            ? array_values(array_filter($columns, 'is_string'))
-            : ['id', 'name', 'email', 'created_at'];
+        return (
+            is_array($columns)
+                ? array_values(array_filter($columns, 'is_string'))
+                : ['id', 'name', 'email', 'created_at']
+        );
     }
 
     private static function displayValue(mixed $value): string

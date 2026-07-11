@@ -16,7 +16,7 @@ final class UserModelResolver
     {
         $modelClass = config('foundation.users.model', 'App\\Models\\User');
 
-        if (! is_string($modelClass) || ! is_subclass_of($modelClass, Model::class)) {
+        if (!is_string($modelClass) || !is_subclass_of($modelClass, Model::class)) {
             throw new RuntimeException('The configured foundation user model must be an Eloquent model.');
         }
 

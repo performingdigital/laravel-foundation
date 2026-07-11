@@ -28,7 +28,7 @@ final class DatabaseImportCommand extends Command
 
         $path = $this->argument('path');
 
-        if (! is_file($path)) {
+        if (!is_file($path)) {
             $this->error('Database dump not found.');
 
             return self::FAILURE;
@@ -42,7 +42,7 @@ final class DatabaseImportCommand extends Command
 
         $database = (string) $configuration['database'];
 
-        if (! $this->option('force') && ! confirm("Replace database [{$database}]?")) {
+        if (!$this->option('force') && !confirm("Replace database [{$database}]?")) {
             $this->warn('Import cancelled.');
 
             return self::FAILURE;
@@ -53,7 +53,12 @@ final class DatabaseImportCommand extends Command
         $escapedDatabase = str_replace('`', '``', $database);
         $password = escapeshellarg((string) ($configuration['password'] ?? ''));
 
-        exec("MYSQL_PWD={$password} {$mysql} {$connection} --execute=".escapeshellarg("CREATE DATABASE IF NOT EXISTS `{$escapedDatabase}`"), $output, $exitCode);
+        exec(
+            "MYSQL_PWD={$password} {$mysql} {$connection} --execute="
+                . escapeshellarg("CREATE DATABASE IF NOT EXISTS `{$escapedDatabase}`"),
+            $output,
+            $exitCode,
+        );
 
         if ($exitCode !== 0) {
             $this->error('Unable to create the target database.');
@@ -61,7 +66,11 @@ final class DatabaseImportCommand extends Command
             return self::FAILURE;
         }
 
-        exec("MYSQL_PWD={$password} {$mysql} {$connection} ".escapeshellarg($database).' < '.escapeshellarg($path), $output, $exitCode);
+        exec(
+            "MYSQL_PWD={$password} {$mysql} {$connection} " . escapeshellarg($database) . ' < ' . escapeshellarg($path),
+            $output,
+            $exitCode,
+        );
 
         if ($exitCode !== 0) {
             $this->error('Database import failed.');
@@ -82,13 +91,13 @@ final class DatabaseImportCommand extends Command
         $connection = $this->option('connection') ?: config('database.default');
         $configuration = config("database.connections.{$connection}");
 
-        if (! is_array($configuration)) {
+        if (!is_array($configuration)) {
             $this->error("Database connection [{$connection}] is not configured.");
 
             return null;
         }
 
-        if (! in_array($configuration['driver'] ?? null, ['mysql', 'mariadb'], true)) {
+        if (!in_array($configuration['driver'] ?? null, ['mysql', 'mariadb'], true)) {
             $this->error('The db:import command only supports MySQL and MariaDB.');
 
             return null;
@@ -109,9 +118,9 @@ final class DatabaseImportCommand extends Command
     private function mysqlConnectionArguments(array $configuration): string
     {
         return implode(' ', [
-            '--host='.escapeshellarg((string) ($configuration['host'] ?? '127.0.0.1')),
-            '--port='.escapeshellarg((string) ($configuration['port'] ?? '3306')),
-            '--user='.escapeshellarg((string) ($configuration['username'] ?? 'root')),
+            '--host=' . escapeshellarg((string) ($configuration['host'] ?? '127.0.0.1')),
+            '--port=' . escapeshellarg((string) ($configuration['port'] ?? '3306')),
+            '--user=' . escapeshellarg((string) ($configuration['username'] ?? 'root')),
         ]);
     }
 }

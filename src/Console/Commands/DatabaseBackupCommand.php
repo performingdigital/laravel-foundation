@@ -28,7 +28,7 @@ final class DatabaseBackupCommand extends Command
         $pathArgument = $this->argument('path');
         $path = is_string($pathArgument) && $pathArgument !== ''
             ? $pathArgument
-            : storage_path('app/backups/'.$database.'-'.now()->format('Y-m-d_His').'.sql');
+            : storage_path('app/backups/' . $database . '-' . now()->format('Y-m-d_His') . '.sql');
 
         $files->ensureDirectoryExists(dirname($path));
 
@@ -37,9 +37,9 @@ final class DatabaseBackupCommand extends Command
         $command = implode(' ', [
             "MYSQL_PWD={$password}",
             $mysqldump,
-            '--host='.escapeshellarg((string) ($configuration['host'] ?? '127.0.0.1')),
-            '--port='.escapeshellarg((string) ($configuration['port'] ?? '3306')),
-            '--user='.escapeshellarg((string) ($configuration['username'] ?? 'root')),
+            '--host=' . escapeshellarg((string) ($configuration['host'] ?? '127.0.0.1')),
+            '--port=' . escapeshellarg((string) ($configuration['port'] ?? '3306')),
+            '--user=' . escapeshellarg((string) ($configuration['username'] ?? 'root')),
             '--single-transaction',
             '--routines',
             '--no-tablespaces',
@@ -70,13 +70,13 @@ final class DatabaseBackupCommand extends Command
         $connection = $this->option('connection') ?: config('database.default');
         $configuration = config("database.connections.{$connection}");
 
-        if (! is_array($configuration)) {
+        if (!is_array($configuration)) {
             $this->error("Database connection [{$connection}] is not configured.");
 
             return null;
         }
 
-        if (! in_array($configuration['driver'] ?? null, ['mysql', 'mariadb'], true)) {
+        if (!in_array($configuration['driver'] ?? null, ['mysql', 'mariadb'], true)) {
             $this->error('The db:backup command only supports MySQL and MariaDB.');
 
             return null;

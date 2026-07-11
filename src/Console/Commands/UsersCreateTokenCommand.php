@@ -35,13 +35,13 @@ final class UsersCreateTokenCommand extends Command
             return self::FAILURE;
         }
 
-        if (! in_array(self::SANCTUM_TRAIT, class_uses_recursive($user), true)) {
+        if (!in_array(self::SANCTUM_TRAIT, class_uses_recursive($user), true)) {
             $this->error('The configured user model must use Laravel\\Sanctum\\HasApiTokens.');
 
             return self::FAILURE;
         }
 
-        if (! method_exists($user, 'createToken')) {
+        if (!method_exists($user, 'createToken')) {
             $this->error('The configured user model cannot create Sanctum tokens.');
 
             return self::FAILURE;
@@ -54,7 +54,7 @@ final class UsersCreateTokenCommand extends Command
             $abilities !== [] ? $abilities : ['*'],
         );
 
-        if (! is_object($token) || ! isset($token->plainTextToken) || ! is_string($token->plainTextToken)) {
+        if (!is_object($token) || !isset($token->plainTextToken) || !is_string($token->plainTextToken)) {
             $this->error('Sanctum did not return a plain text token.');
 
             return self::FAILURE;
